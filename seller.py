@@ -15,12 +15,12 @@ def get_product_list(last_id, client_id, seller_token):
     """Получить список товаров магазина озон.
 
     Аргументы:
-    last_id -- Последний ID
-    client_id -- ID Клиента
-    seller_token -- Токен продавца 
+    last_id (str) -- Последний ID
+    client_id (str) -- ID Клиента
+    seller_token (str) -- Токен продавца 
     
     Возвращает:
-    Список товаров магазина озон.
+    list: Список товаров магазина озон.
     """
     
     url = "https://api-seller.ozon.ru/v2/product/list"
@@ -45,11 +45,11 @@ def get_offer_ids(client_id, seller_token):
     """Получить артикулы товаров магазина озон.
 
     Аргументы:
-    client_id -- ID Клиента
-    seller_token -- токен продавца 
+    client_id (str) -- ID Клиента
+    seller_token (str) -- токен продавца 
 
     Возвращает:
-    Артикулы товаров магазина ozon.
+    list: Артикулы товаров магазина ozon.
     """
     
     last_id = ""
@@ -71,9 +71,9 @@ def update_price(prices: list, client_id, seller_token):
     """Обновить цены товаров.
     
     Аргументы:
-    prices: list -- лист с ценами
-    client_id -- ID клиента 
-    seller_token -- токен продавца
+    prices (list) -- лист с ценами
+    client_id (str) -- ID клиента 
+    seller_token (str) -- токен продавца
 
     Возвращает:
     Обновлённую цену товаров.
@@ -94,12 +94,12 @@ def update_stocks(stocks: list, client_id, seller_token):
     """Обновить остатки.
     
     Аргументы:
-    stocks: list -- лист с остатками
-    client_id -- ID клиента
-    seller_token -- токен продавца 
+    stocks (list) -- лист с остатками
+    client_id (str) -- ID клиента
+    seller_token (str) -- токен продавца 
 
     Возвращает:
-    Обновляет остатки товара.
+    dict: Обновляет остатки товара.
     """
     
     url = "https://api-seller.ozon.ru/v1/product/import/stocks"
@@ -116,11 +116,8 @@ def update_stocks(stocks: list, client_id, seller_token):
 def download_stock():
     """Скачать файл ostatki с сайта casio.
     
-    Атрибуты:
-    casio_url -- сайт,который нужно скачать
-    
     Возвращает:
-    Скачанный файл ostatki с сайта casio.
+    list: Список остатков часов.
     """
     
     # Скачать остатки с сайта
@@ -146,11 +143,11 @@ def create_stocks(watch_remnants, offer_ids):
     """Создаются запасы часов.
 
     Аргументы:
-    watch_remnants -- остатки с сайта casio
-    offer_ids -- IDS предложения
+    watch_remnants (list) -- остатки с сайта casio
+    offer_ids (list) -- IDS предложения
     
     Возвращает:
-    Создает запасы с часами.
+    list: Создает запасы с часами.
     """
     
     # Уберем то, что не загружено в seller
@@ -176,11 +173,11 @@ def create_prices(watch_remnants, offer_ids):
     """Создание цены.
 
     Аргументы:
-    watch_remnants -- остатки с сайта casio
-    offer_ids -- IDS предложения
+    watch_remnants (list) -- остатки с сайта casio
+    offer_ids (list) -- IDS предложения
 
     Возвращает:
-    Цену товаров.
+    list: Цену товаров.
     """
     
     prices = []
@@ -201,10 +198,10 @@ def price_conversion(price: str) -> str:
     """Преобразовать цену. Пример: 5'990.00 руб. -> 5990.
 
     Аргументы:
-    price: str -- Цена товаров
+    price (float) -- Цена товаров
 
     Возвращает:
-    Преобразованную цену в str.
+    str: Преобразованную цену.
     """
     
     return re.sub("[^0-9]", "", price.split(".")[0])
@@ -214,8 +211,8 @@ def divide(lst: list, n: int):
     """Разделить список lst на части по n элементов.
 
     Аргументы:
-    lst: list -- лист,который нужно разделить
-    n: int -- на какое количество нужно разделить лист
+    lst (list) -- лист,который нужно разделить
+    n (int) -- на какое количество нужно разделить лист
     
     Возвращает:
     Список lst разделенный на части по n элементов.
@@ -228,11 +225,11 @@ async def upload_prices(watch_remnants, client_id, seller_token):
     """Создаёт итоговый список цен.
     
     Аргументы:
-    watch_remnants -- остатки с сайта casio
-    client_id -- ID клиента 
-    seller_token -- токен продавца 
+    watch_remnants (list) -- остатки с сайта casio
+    client_id (str) -- ID клиента 
+    seller_token (str) -- токен продавца 
     Возвращает:
-    Итоговый список цен.
+    list: Итоговый список цен.
 
     """
     
@@ -247,12 +244,12 @@ async def upload_stocks(watch_remnants, client_id, seller_token):
     """Создаёт итоговый запас товара.
 
     Аргументы:
-    watch_remnants -- остатки с сайта casio
-    client_id -- ID клиента
-    seller_id -- ID продавца 
+    watch_remnants(list) -- остатки с сайта casio
+    client_id(str) -- ID клиента
+    seller_id(str) -- ID продавца 
  
     Возвращает:
-    Итоговый запас товара.
+    list: Итоговый запас товара.
     """
     
     offer_ids = get_offer_ids(client_id, seller_token)
