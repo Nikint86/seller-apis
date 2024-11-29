@@ -14,12 +14,12 @@ def get_product_list(page, campaign_id, access_token):
     """Получает список товаров Яндекс маркета.
     
     Аргументы: 
-    page -- Страница с товарами Яндекс маркета 
-    campaign_id -- ID компании 
-    access_token -- токен доступа
+    page (str) -- Страница с товарами Яндекс маркета 
+    campaign_id (str) -- ID компании 
+    access_token (str)-- токен доступа
 
     Возвращает:
-    Список товаров Яндекс маркета.
+    list: Список товаров Яндекс маркета.
     """ 
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -43,12 +43,12 @@ def update_stocks(stocks, campaign_id, access_token):
     """Обновить остатки товара.
     
     Аргументы:
-    stocks -- остатки товара Яндекс маркета
-    campaign_id -- ID компании
-    access_token -- токен доступа
+    stocks (list) -- остатки товара Яндекс маркета
+    campaign_id (str) -- ID компании
+    access_token (str) -- токен доступа
 
     Возвращает:
-    Обновлённые остатки товара.
+    dict: Обновлённые остатки товара.
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -69,12 +69,12 @@ def update_price(prices, campaign_id, access_token):
     """Обновить цены товаров.
     
     Аргументы:
-    prices -- цена товаров
-    campaign_id -- ID компании 
-    access_token -- токен доступа
+    prices (list) -- цена товаров
+    campaign_id (str) -- ID компании 
+    access_token (str) -- токен доступа
 
     Возвращает:
-    Обновляенную цену товаров.
+    dict: Обновленную цену товаров.
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -95,11 +95,11 @@ def get_offer_ids(campaign_id, market_token):
     """Получить артикулы товаров Яндекс маркета.
     
     Аргументы:
-    campaign_id -- ID компании
-    market_token -- токен маркета
+    campaign_id (str) -- ID компании
+    market_token (str) -- токен маркета
 
     Возвращает:
-    Артикулы товаров Яндекс маркета.
+    list: Артикулы товаров Яндекс маркета.
     """
     page = ""
     product_list = []
@@ -119,12 +119,12 @@ def create_stocks(watch_remnants, offer_ids, warehouse_id):
     """Создаются запасы часов.
 
     Аргументы:
-    watch_remnants -- запасы часов с яндекс маркета 
-    offer_ids -- IDS предложения 
-    warehouse_id -- ID склада
+    watch_remnants (list) -- запасы часов с яндекс маркета 
+    offer_ids (list) -- IDS предложения 
+    warehouse_id (str) -- ID склада
     
     Возвращает: 
-    Запасы часов яндекс маркета.
+    list: Запасы часов яндекс маркета.
     """
     # Уберем то, что не загружено в market
     stocks = list()
@@ -174,11 +174,11 @@ def create_prices(watch_remnants, offer_ids):
     """Создание цены.
 
     Аргументы:
-    watch_remnants -- запасы часов с яндекс маркета 
-    offer_ids -- IDS предложения
+    watch_remnants (list) -- запасы часов с яндекс маркета 
+    offer_ids (str) -- IDS предложения
 
     Возвращает:
-    Цену товаров Яндекс маркета.
+    list: Цену товаров Яндекс маркета.
     """
     prices = []
     for watch in watch_remnants:
@@ -203,12 +203,12 @@ async def upload_prices(watch_remnants, campaign_id, market_token):
     """Создаёт итоговый список цен.
     
     Аргументы:
-    watch_remnants -- запасы часов с Яндекс маркета 
-    campaign_id -- ID компании
-    market_token -- токен Яндекс маркета
+    watch_remnants (list) -- запасы часов с Яндекс маркета 
+    campaign_id (str) -- ID компании
+    market_token (str) -- токен Яндекс маркета
 
     Возвращает:
-    Итоговый список цен.
+    list: Итоговый список цен.
     """
     offer_ids = get_offer_ids(campaign_id, market_token)
     prices = create_prices(watch_remnants, offer_ids)
@@ -221,13 +221,13 @@ async def upload_stocks(watch_remnants, campaign_id, market_token, warehouse_id)
     """Создаёт итоговый запас товара.
 
     Аргументы:
-    watch_remnants -- запасы часов с яндекс маркета 
-    campaign_id -- ID компании 
-    market_token -- токен яндекс маркета 
-    warehouse_id -- ID склада
+    watch_remnants (list) -- запасы часов с яндекс маркета 
+    campaign_id (str) -- ID компании 
+    market_token (str) -- токен яндекс маркета 
+    warehouse_id (str) -- ID склада
 
     Возвращает:
-    Итоговый запас товара.
+    list: Итоговый запас товара.
     """
     offer_ids = get_offer_ids(campaign_id, market_token)
     stocks = create_stocks(watch_remnants, offer_ids, warehouse_id)
